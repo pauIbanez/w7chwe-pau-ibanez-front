@@ -5,11 +5,6 @@ export const loadProfilesAction = (profiles) => ({
   profiles,
 });
 
-export const loadProfileAction = (profile) => ({
-  type: actionTypes.loadProfile,
-  profile,
-});
-
 export const updateProfileAction = (profile) => ({
   type: actionTypes.updateProfile,
   profile,

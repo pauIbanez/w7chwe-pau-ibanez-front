@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import LoadingPage from "./pages/LoadingPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -11,7 +12,7 @@ function App() {
     new Promise((resolve) => {
       setTimeout(() => {
         resolve(true);
-      }, 1000000000);
+      }, 2000000);
     });
 
   useEffect(
@@ -44,7 +45,7 @@ function App() {
           {authenticated && <Route path="/home" element={"home placeholder"} />}
           <Route path="/users/:id" element={"userDetails placeholder"} />
           {authenticated ? (
-            <Route path="*" element={"notFound placeholder"} />
+            <Route path="*" element={<NotFoundPage />} />
           ) : (
             <Route path="*" element={<Navigate to="/login" />} />
           )}

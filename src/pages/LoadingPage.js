@@ -12,7 +12,7 @@ const PageHolder = styled.div`
 const LoadingPage = () => {
   return (
     <PageHolder>
-      <div class="loader">
+      <div className="loader">
         <span></span>
         <span></span>
         <span></span>

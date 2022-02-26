@@ -14,3 +14,17 @@ export const loadProfilesThunk = async (dispatch) => {
 
   dispatch(loadProfilesAction(data.profiles));
 };
+
+export const getLoadProfileThunk = (id) => async (dispatch) => {
+  const token = localStorage.getItem("token");
+  const { data } = await axios.get(
+    `${process.env.REACT_APP_API_URL}profiles/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  dispatch(loadProfilesAction(data));
+};

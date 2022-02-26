@@ -14,8 +14,7 @@ export const loadProfilesThunk = async (dispatch) => {
       },
     }
   );
-
-  dispatch(loadProfilesAction(data.profiles));
+  dispatch(loadProfilesAction(data));
 };
 
 export const getLoadProfileThunk = (id) => async (dispatch) => {

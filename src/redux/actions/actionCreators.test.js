@@ -1,4 +1,8 @@
-import { loadProfilesAction } from "./actionCreators";
+import {
+  loadProfileAction,
+  loadProfilesAction,
+  updateProfileAction,
+} from "./actionCreators";
 import actionTypes from "./actionTypes";
 
 describe("Given loadProfilesAction", () => {
@@ -19,6 +23,44 @@ describe("Given loadProfilesAction", () => {
       };
 
       const action = loadProfilesAction(profiles);
+
+      expect(action).toEqual(expectedAction);
+    });
+  });
+});
+
+describe("Given loadProfileAction", () => {
+  describe("When it's called passing a profile", () => {
+    test("Then it should return an action with type loadProfile and the profile", () => {
+      const profile = {
+        name: "sdadsa",
+      };
+
+      const expectedAction = {
+        type: actionTypes.loadProfile,
+        profile,
+      };
+
+      const action = loadProfileAction(profile);
+
+      expect(action).toEqual(expectedAction);
+    });
+  });
+});
+
+describe("Given updateProfileAction", () => {
+  describe("When it's called passing a profile", () => {
+    test("Then it should return an action with type updateProfile and the profile", () => {
+      const profile = {
+        name: "sdadsa",
+      };
+
+      const expectedAction = {
+        type: actionTypes.updateProfile,
+        profile,
+      };
+
+      const action = updateProfileAction(profile);
 
       expect(action).toEqual(expectedAction);
     });

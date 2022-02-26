@@ -10,7 +10,7 @@ export const loadProfileAction = (profile) => ({
   profile,
 });
 
-export const updateProfile = (profile) => ({
+export const updateProfileAction = (profile) => ({
   type: actionTypes.updateProfile,
   profile,
 });

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
-import LoadingPage from "./pages/LoadingPage";
-import NotFoundPage from "./pages/NotFoundPage";
+import LoadingPage from "./pages/LoadingPage/LoadingPage";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 function App() {
   const [loading, setLoading] = useState(true);

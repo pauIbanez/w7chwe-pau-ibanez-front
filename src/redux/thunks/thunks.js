@@ -1,5 +1,8 @@
 import axios from "axios";
-import { loadProfilesAction } from "../actions/actionCreators";
+import {
+  loadProfilesAction,
+  updateProfileAction,
+} from "../actions/actionCreators";
 
 export const loadProfilesThunk = async (dispatch) => {
   const token = localStorage.getItem("token");
@@ -27,4 +30,19 @@ export const getLoadProfileThunk = (id) => async (dispatch) => {
   );
 
   dispatch(loadProfilesAction(data));
+};
+
+export const getUpdateProfileThunk = (id, profile) => async (dispatch) => {
+  const token = localStorage.getItem("token");
+  const { data } = await axios.patch(
+    `${process.env.REACT_APP_API_URL}profiles/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: profile,
+    }
+  );
+
+  dispatch(updateProfileAction(data));
 };

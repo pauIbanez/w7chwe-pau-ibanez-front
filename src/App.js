@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
-
+  const dispatch = useDispatch();
   const validate = () =>
     new Promise((resolve) => {
       setTimeout(() => {
-        resolve(false);
+        resolve(true);
       }, 3000);
     });
 
@@ -25,7 +26,7 @@ function App() {
         setAuthenticated(valid);
         setLoading(false);
       })(),
-    []
+    [dispatch]
   );
 
   return (

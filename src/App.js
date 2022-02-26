@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
+import LoadingPage from "./pages/LoadingPage";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -10,7 +11,7 @@ function App() {
     new Promise((resolve) => {
       setTimeout(() => {
         resolve(true);
-      }, 3000);
+      }, 1000000000);
     });
 
   useEffect(
@@ -32,7 +33,7 @@ function App() {
   return (
     <>
       {loading ? (
-        <h1>LOADING</h1>
+        <LoadingPage />
       ) : (
         <Routes>
           <Route path="/" element={<Navigate to="/home" />} />

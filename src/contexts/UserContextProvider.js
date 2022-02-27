@@ -7,6 +7,7 @@ const UserContextProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const [authenticated, setAuthenticated] = useState(false);
+  const [user, setUser] = useState({});
 
   const loginUser = async (formData, cb) => {
     try {
@@ -17,6 +18,7 @@ const UserContextProvider = ({ children }) => {
         }
       );
       localStorage.setItem("token", data.token);
+      localStorage.setItem("id", data.id);
       setAuthenticated(true);
       navigate("/home");
     } catch (error) {
@@ -50,10 +52,33 @@ const UserContextProvider = ({ children }) => {
     }
   }, []);
 
+  useEffect(
+    () =>
+      (async () => {
+        if (authenticated) {
+          const id = localStorage.getItem("id");
+          const token = localStorage.getItem("token");
+          try {
+            const { data } = await axios.get(
+              `${process.env.REACT_APP_API_URL}profiles/${id}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            console.log(data);
+          } catch (error) {}
+        }
+      })(),
+    [authenticated]
+  );
+
   const contextValue = {
     authenticated,
     loginUser,
     registerUser,
+    user,
   };
 
   return (

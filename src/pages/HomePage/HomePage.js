@@ -38,7 +38,7 @@ const UserList = styled.ul`
 `;
 
 const ByWho = styled.p`
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   height: 30px;

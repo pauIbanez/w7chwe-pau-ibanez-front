@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import userContext from "./contexts/userContext";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
 
 function App() {
   const { authenticated } = useContext(userContext);
@@ -12,7 +13,7 @@ function App() {
       <Route path="/" element={<Navigate to="/home" />} />
 
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={"register placeholder"} />
+      <Route path="/register" element={<RegisterPage />} />
 
       {authenticated ? (
         <>

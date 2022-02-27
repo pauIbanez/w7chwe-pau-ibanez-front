@@ -8,8 +8,10 @@ import {
   FormButton,
 } from "../../styles/formStyles";
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const blankFormData = {
+    name: "",
+    lastName: "",
     username: "",
     password: "",
   };
@@ -46,6 +48,24 @@ const LoginForm = () => {
   return (
     <>
       <Form data-testid="loginForm" onSubmit={submit}>
+        <HiddenLabel htmlFor="name">Name</HiddenLabel>
+        <InputField
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Name"
+          value={formData.name}
+          onChange={updateData}
+        />
+        <HiddenLabel htmlFor="lastName">Last name</HiddenLabel>
+        <InputField
+          type="text"
+          name="lastName"
+          id="lastName"
+          placeholder="Last name"
+          value={formData.lastName}
+          onChange={updateData}
+        />
         <HiddenLabel htmlFor="username">Username</HiddenLabel>
         <InputField
           type="text"
@@ -85,4 +105,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

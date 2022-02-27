@@ -58,6 +58,13 @@ const SubmitButton = styled.button`
   }
 `;
 
+const Errors = styled.p`
+  margin-top: 30px;
+  color: red;
+  text-align: center;
+  font-size: 14px;
+`;
+
 const LoginForm = () => {
   const blankFormData = {
     username: "",
@@ -67,6 +74,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(blankFormData);
+  const [showErrors, setShowErrors] = useState(false);
 
   const updateData = (event) => {
     const newFormData = {
@@ -96,40 +104,48 @@ const LoginForm = () => {
       );
       localStorage.setItem("token", data.token);
       navigate("/home");
+      return;
     } catch (error) {
       reset();
-      // showTryAgainOverlay();
+      setShowErrors(true);
     }
   };
 
   return (
-    <Form data-testid="loginForm" onSubmit={submit}>
-      <HiddenLabel htmlFor="username">Username</HiddenLabel>
-      <InputField
-        type="text"
-        name="username"
-        id="username"
-        placeholder="Username"
-        value={formData.username}
-        onChange={updateData}
-      />
-      <HiddenLabel htmlFor="username">Password</HiddenLabel>
-      <InputField
-        type="password"
-        name="password"
-        id="password"
-        placeholder="Password"
-        value={formData.password}
-        onChange={updateData}
-      />
-      <SubmitButton
-        type="submit"
-        disabled={disabled}
-        loading={loading.toString()}
-      >
-        {loading ? <i className="loader --4"></i> : "Log In"}
-      </SubmitButton>
-    </Form>
+    <>
+      <Form data-testid="loginForm" onSubmit={submit}>
+        <HiddenLabel htmlFor="username">Username</HiddenLabel>
+        <InputField
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Username"
+          value={formData.username}
+          onChange={updateData}
+        />
+        <HiddenLabel htmlFor="username">Password</HiddenLabel>
+        <InputField
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={updateData}
+        />
+        <SubmitButton
+          type="submit"
+          disabled={disabled}
+          loading={loading.toString()}
+        >
+          {loading ? <i className="loader --4"></i> : "Log In"}
+        </SubmitButton>
+      </Form>
+      {showErrors && (
+        <Errors>
+          The username or password provided do not match a registered account
+        </Errors>
+      )}
+    </>
   );
 };
 

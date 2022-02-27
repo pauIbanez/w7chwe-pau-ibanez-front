@@ -13,7 +13,7 @@ function App() {
     new Promise((resolve) => {
       setTimeout(() => {
         resolve(true);
-      }, 2000000);
+      }, 2000);
     });
 
   useEffect(

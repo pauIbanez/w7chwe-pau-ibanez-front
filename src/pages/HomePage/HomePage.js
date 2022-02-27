@@ -55,7 +55,7 @@ const ByWho = styled.p`
 const HomePage = () => {
   const dispatch = useDispatch();
   const { profiles } = useSelector((state) => state);
-  const { user } = useContext(userContext);
+  const { user, updateUser } = useContext(userContext);
 
   useEffect(() => {
     dispatch(loadProfilesThunk);
@@ -74,15 +74,33 @@ const HomePage = () => {
     return isFriend;
   };
 
-  const filteredProfiles = profiles.filter(
-    (profile) => profile.id !== localStorage.getItem("id")
-  );
+  const filteredProfiles = profiles.filter((profile) => profile.id !== user.id);
+
+  const changeFriendStatus = (mode, id) => {
+    let newFriends = [];
+    if (mode) {
+      newFriends = user.friends.filter((friend) => friend.id !== id);
+    } else {
+      const ids = user.friends.map((friend) => friend.id);
+      newFriends = [...ids, id];
+    }
+
+    updateUser({ friends: newFriends });
+  };
 
   const profileElements = filteredProfiles.map((profile) => (
     <ListProfile
       key={profile.id}
       profile={profile}
-      action={() => {}}
+      action={
+        getIsFriend(profile.id)
+          ? () => {
+              changeFriendStatus(true, profile.id);
+            }
+          : () => {
+              changeFriendStatus(false, profile.id);
+            }
+      }
       text={getIsFriend(profile.id) ? "Remove" : "Add"}
     />
   ));

@@ -45,6 +45,33 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
+  const updateUser = async (update, cb) => {
+    const token = localStorage.getItem("token");
+    const id = localStorage.getItem("id");
+    try {
+      await axios.patch(
+        `${process.env.REACT_APP_API_URL}profiles/update`,
+        update,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API_URL}profiles/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setUser(data);
+    } catch (error) {
+      cb();
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -82,6 +109,7 @@ const UserContextProvider = ({ children }) => {
     loginUser,
     registerUser,
     user,
+    updateUser,
   };
 
   return (

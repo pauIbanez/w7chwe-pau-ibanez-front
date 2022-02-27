@@ -67,13 +67,16 @@ const UserContextProvider = ({ children }) => {
                 },
               }
             );
-            console.log(data);
-          } catch (error) {}
+            setUser(data);
+          } catch (error) {
+            localStorage.removeItem("id");
+            localStorage.removeItem("token");
+            navigate("/login");
+          }
         }
       })(),
-    [authenticated]
+    [authenticated, navigate]
   );
-
   const contextValue = {
     authenticated,
     loginUser,

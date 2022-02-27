@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import ListProfile from "../../components/ListProfile/ListProfile";
+import userContext from "../../contexts/userContext";
 import { loadProfilesThunk } from "../../redux/thunks/thunks";
 
 const PageHolder = styled.div`
@@ -53,17 +55,37 @@ const ByWho = styled.p`
 const HomePage = () => {
   const dispatch = useDispatch();
   const { profiles } = useSelector((state) => state);
+  const { user } = useContext(userContext);
 
   useEffect(() => {
     dispatch(loadProfilesThunk);
   }, [dispatch]);
 
-  const profileElements = profiles.map((profile) => (
-    <ListProfile key={profile.id} profile={profile} />
-  ));
+  const getIsFriend = (id) => {
+    if (!user.friends) {
+      return false;
+    }
+    let isFriend = false;
+    user.friends.forEach((friend) => {
+      if (friend.id === id) {
+        isFriend = true;
+      }
+    });
+    return isFriend;
+  };
 
-  console.log(profileElements);
-  console.log(profiles);
+  const filteredProfiles = profiles.filter(
+    (profile) => profile.id !== localStorage.getItem("id")
+  );
+
+  const profileElements = filteredProfiles.map((profile) => (
+    <ListProfile
+      key={profile.id}
+      profile={profile}
+      action={() => {}}
+      text={getIsFriend(profile.id) ? "Remove" : "Add"}
+    />
+  ));
 
   return (
     <PageHolder>

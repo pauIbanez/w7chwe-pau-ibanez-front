@@ -16,7 +16,6 @@ const profilesReducer = (currentProfiles = [], action = {}) => {
       newProfiles = [...currentProfiles];
   }
 
-  console.log("end", newProfiles);
   return newProfiles;
 };
 

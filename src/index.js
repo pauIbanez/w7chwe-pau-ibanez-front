@@ -7,12 +7,16 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import "@fontsource/montserrat";
+import "@fontsource/pacifico";
+import UserContextProvider from "./contexts/UserContextProvider";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <App />
+        <UserContextProvider>
+          <App />
+        </UserContextProvider>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,

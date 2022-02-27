@@ -107,7 +107,7 @@ const StageTwo = ({ disabled, loading, goBack, updateData }) => {
           "Register"
         )}
       </FormButton>
-      <BackLink onClick={goBackClick}> Go Back </BackLink>
+      <BackLink onClick={goBackClick}>Go Back</BackLink>
     </>
   );
 };

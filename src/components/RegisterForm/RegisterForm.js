@@ -50,6 +50,10 @@ const RegisterForm = () => {
     setStage(1);
   };
 
+  const goBack = () => {
+    setStage(0);
+  };
+
   const submit = async (event) => {
     event.preventDefault();
     console.log("submitted");
@@ -68,7 +72,7 @@ const RegisterForm = () => {
             changeState={changeState}
           />
         ) : (
-          <StageTwo disabled={disabled} loading={loading} />
+          <StageTwo disabled={disabled} loading={loading} goBack={goBack} />
         )}
       </Form>
       {showErrors && <Errors>{errorMessage}</Errors>}

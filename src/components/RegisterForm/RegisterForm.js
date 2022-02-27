@@ -1,12 +1,8 @@
 import { useContext, useState } from "react";
 import userContext from "../../contexts/userContext";
-import {
-  Errors,
-  Form,
-  HiddenLabel,
-  InputField,
-  FormButton,
-} from "../../styles/formStyles";
+import { Errors, Form } from "../../styles/formStyles";
+import StageOne from "./StageOne";
+import StageTwo from "./StageTwo";
 
 const RegisterForm = () => {
   const blankFormData = {
@@ -64,61 +60,15 @@ const RegisterForm = () => {
   return (
     <>
       <Form data-testid="loginForm" onSubmit={submit}>
-        <HiddenLabel htmlFor="name">Name</HiddenLabel>
-        <InputField
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Name"
-          value={formData.name}
-          onChange={updateData}
-          autoComplete="off"
-        />
-        <HiddenLabel htmlFor="lastName">Last name</HiddenLabel>
-        <InputField
-          type="text"
-          name="lastName"
-          id="lastName"
-          placeholder="Last name"
-          value={formData.lastName}
-          onChange={updateData}
-          autoComplete="off"
-        />
-        <HiddenLabel htmlFor="username">Username</HiddenLabel>
-        <InputField
-          type="text"
-          name="username"
-          id="username"
-          placeholder="Username"
-          value={formData.username}
-          onChange={updateData}
-          autoComplete="off"
-        />
-        <HiddenLabel htmlFor="password">Password</HiddenLabel>
-        <InputField
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={updateData}
-        />
         {stage === 0 ? (
-          <FormButton disabled={disabled} onClick={changeState}>
-            Next
-          </FormButton>
-        ) : (
-          <FormButton
-            type="submit"
+          <StageOne
+            formData={formData}
+            updateData={updateData}
             disabled={disabled}
-            loading={loading.toString()}
-          >
-            {loading ? (
-              <i className="loader --4" data-testid="loader"></i>
-            ) : (
-              "Log In"
-            )}
-          </FormButton>
+            changeState={changeState}
+          />
+        ) : (
+          <StageTwo disabled={disabled} loading={loading} />
         )}
       </Form>
       {showErrors && <Errors>{errorMessage}</Errors>}

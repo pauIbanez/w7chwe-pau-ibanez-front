@@ -84,7 +84,7 @@ const RegisterForm = ({ onSucess }) => {
 
   return (
     <>
-      <Form data-testid="loginForm" onSubmit={submit}>
+      <Form data-testid="registerForm" onSubmit={submit}>
         {stage === 0 ? (
           <StageOne
             formData={formData}

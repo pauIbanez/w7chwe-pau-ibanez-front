@@ -46,11 +46,16 @@ const Controlls = styled.div`
 
 const Action = styled.button`
   border-radius: 5px;
-  padding: 5px;
-  background-color: transparent;
-  border: 1px solid #8e8e8e;
+  padding: 5px 10px;
+  border: none;
+  ${({ nice }) =>
+    !nice
+      ? "background-color: transparent; border: 1px solid #8e8e8e;"
+      : "background-image: linear-gradient(to right, #81007f, #fb00f7); color: white;"}
+
   height: fit-content;
-  width: 60px;
+  min-width: 60px;
+  font-family: inherit;
 `;
 
 const ListProfile = ({ profile, action, text }) => {
@@ -70,7 +75,9 @@ const ListProfile = ({ profile, action, text }) => {
         <p>{firstLetterToCap(profile.lastName)}</p>
       </Names>
       <Controlls>
-        <Action onClick={action}>{text}</Action>
+        <Action onClick={action} nice={text === "Add"}>
+          {text}
+        </Action>
       </Controlls>
     </Profile>
   );

@@ -1,9 +1,5 @@
 import actionTypes from "../actions/actionTypes";
-import {
-  getLoadProfileThunk,
-  getUpdateProfileThunk,
-  loadProfilesThunk,
-} from "./thunks";
+import { getLoadProfileThunk, loadProfilesThunk } from "./thunks";
 
 describe("Given loadProfilesThunk", () => {
   describe("When it's instanciated with a dispatch", () => {

@@ -1,7 +1,6 @@
-import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
 import styled from "styled-components";
+import userContext from "../../contexts/userContext";
 
 const Form = styled.form`
   display: flex;
@@ -71,10 +70,10 @@ const LoginForm = () => {
     password: "",
   };
 
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(blankFormData);
   const [showErrors, setShowErrors] = useState(false);
+  const { loginUser } = useContext(userContext);
 
   const updateData = (event) => {
     const newFormData = {
@@ -88,27 +87,16 @@ const LoginForm = () => {
   if (formData.username && formData.password && !loading) {
     disabled = false;
   }
-  const reset = () => {
+
+  const onFail = () => {
     setLoading(false);
+    setShowErrors(true);
   };
 
   const submit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}users/login`,
-        {
-          ...formData,
-        }
-      );
-      localStorage.setItem("token", data.token);
-      navigate("/home");
-      return;
-    } catch (error) {
-      reset();
-      setShowErrors(true);
-    }
+    loginUser(formData, onFail);
   };
 
   return (

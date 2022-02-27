@@ -27,7 +27,6 @@ const RegisterForm = () => {
           ? event.target.value
           : event.target.files[0],
     };
-
     setFormData(newFormData);
   };
 
@@ -62,7 +61,6 @@ const RegisterForm = () => {
 
   const submit = async (event) => {
     event.preventDefault();
-    console.log("submitted");
     setLoading(true);
     registerUser(formData, onFail);
   };
@@ -78,7 +76,12 @@ const RegisterForm = () => {
             changeState={changeState}
           />
         ) : (
-          <StageTwo disabled={disabled} loading={loading} goBack={goBack} />
+          <StageTwo
+            disabled={disabled}
+            loading={loading}
+            goBack={goBack}
+            updateData={updateData}
+          />
         )}
       </Form>
       {showErrors && <Errors>{errorMessage}</Errors>}

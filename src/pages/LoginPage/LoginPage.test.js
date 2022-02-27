@@ -1,4 +1,5 @@
 import { screen } from "@testing-library/react";
+import userContext from "../../contexts/userContext";
 import { renderInBocata } from "../../setupTests";
 import LoginPage from "./LoginPage";
 
@@ -7,7 +8,13 @@ describe("Given LoginPage", () => {
     test("Then it should render the heading 'Socialmedia' and the loginForm", () => {
       const expectedText = "Socialmedia";
 
-      renderInBocata(<LoginPage />);
+      const loginUser = () => {};
+
+      renderInBocata(
+        <userContext.Provider value={{ fakeLogin: loginUser }}>
+          <LoginPage />
+        </userContext.Provider>
+      );
 
       const heading = screen.getByRole("heading", { name: expectedText });
       const loginForm = screen.getByTestId("loginForm");

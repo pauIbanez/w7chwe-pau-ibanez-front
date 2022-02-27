@@ -111,7 +111,7 @@ const LoginForm = () => {
           value={formData.username}
           onChange={updateData}
         />
-        <HiddenLabel htmlFor="username">Password</HiddenLabel>
+        <HiddenLabel htmlFor="password">Password</HiddenLabel>
         <InputField
           type="password"
           name="password"
@@ -125,7 +125,11 @@ const LoginForm = () => {
           disabled={disabled}
           loading={loading.toString()}
         >
-          {loading ? <i className="loader --4"></i> : "Log In"}
+          {loading ? (
+            <i className="loader --4" data-testid="loader"></i>
+          ) : (
+            "Log In"
+          )}
         </SubmitButton>
       </Form>
       {showErrors && (

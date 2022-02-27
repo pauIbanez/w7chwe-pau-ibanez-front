@@ -17,8 +17,8 @@ const UserContextProvider = ({ children }) => {
         }
       );
       localStorage.setItem("token", data.token);
-      navigate("/home");
       setAuthenticated(true);
+      navigate("/home");
     } catch (error) {
       setAuthenticated(false);
       localStorage.removeItem("token");

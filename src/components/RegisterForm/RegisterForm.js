@@ -19,7 +19,8 @@ const RegisterForm = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(blankFormData);
   const [showErrors, setShowErrors] = useState(false);
-  const { loginUser } = useContext(userContext);
+  const [stage, setStage] = useState(0);
+  const { registerUser } = useContext(userContext);
 
   const updateData = (event) => {
     const newFormData = {
@@ -30,19 +31,34 @@ const RegisterForm = () => {
     setFormData(newFormData);
   };
   let disabled = true;
-  if (formData.username && formData.password && !loading) {
+  if (
+    formData.name &&
+    formData.lastName &&
+    formData.username &&
+    formData.password &&
+    !loading
+  ) {
     disabled = false;
   }
+  let errorMessage;
 
-  const onFail = () => {
+  const onFail = (reason) => {
     setLoading(false);
+    errorMessage = reason;
     setShowErrors(true);
+  };
+
+  const changeState = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setStage(1);
   };
 
   const submit = async (event) => {
     event.preventDefault();
+    console.log("submitted");
     setLoading(true);
-    loginUser(formData, onFail);
+    registerUser(formData, onFail);
   };
 
   return (
@@ -56,6 +72,7 @@ const RegisterForm = () => {
           placeholder="Name"
           value={formData.name}
           onChange={updateData}
+          autoComplete="off"
         />
         <HiddenLabel htmlFor="lastName">Last name</HiddenLabel>
         <InputField
@@ -65,6 +82,7 @@ const RegisterForm = () => {
           placeholder="Last name"
           value={formData.lastName}
           onChange={updateData}
+          autoComplete="off"
         />
         <HiddenLabel htmlFor="username">Username</HiddenLabel>
         <InputField
@@ -74,6 +92,7 @@ const RegisterForm = () => {
           placeholder="Username"
           value={formData.username}
           onChange={updateData}
+          autoComplete="off"
         />
         <HiddenLabel htmlFor="password">Password</HiddenLabel>
         <InputField
@@ -84,23 +103,25 @@ const RegisterForm = () => {
           value={formData.password}
           onChange={updateData}
         />
-        <FormButton
-          type="submit"
-          disabled={disabled}
-          loading={loading.toString()}
-        >
-          {loading ? (
-            <i className="loader --4" data-testid="loader"></i>
-          ) : (
-            "Log In"
-          )}
-        </FormButton>
+        {stage === 0 ? (
+          <FormButton disabled={disabled} onClick={changeState}>
+            Next
+          </FormButton>
+        ) : (
+          <FormButton
+            type="submit"
+            disabled={disabled}
+            loading={loading.toString()}
+          >
+            {loading ? (
+              <i className="loader --4" data-testid="loader"></i>
+            ) : (
+              "Log In"
+            )}
+          </FormButton>
+        )}
       </Form>
-      {showErrors && (
-        <Errors>
-          The username or password provided do not match a registered account
-        </Errors>
-      )}
+      {showErrors && <Errors>{errorMessage}</Errors>}
     </>
   );
 };

@@ -26,6 +26,18 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
+  const registerUser = async (formData, cb) => {
+    try {
+      await axios.post(`${process.env.REACT_APP_API_URL}users/register`, {
+        headers: { "Content-Type": "multipart/form-data" },
+        ...formData,
+      });
+      cb(true);
+    } catch (error) {
+      cb(false);
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -36,6 +48,7 @@ const UserContextProvider = ({ children }) => {
   const contextValue = {
     authenticated,
     loginUser,
+    registerUser,
   };
 
   return (

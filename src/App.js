@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import LoadingPage from "./pages/LoadingPage/LoadingPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 function App() {
@@ -39,7 +40,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/home" />} />
 
-          <Route path="/login" element={"login placeholder"} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={"register placeholder"} />
 
           {authenticated && <Route path="/home" element={"home placeholder"} />}

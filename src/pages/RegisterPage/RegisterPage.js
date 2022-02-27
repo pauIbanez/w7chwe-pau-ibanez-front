@@ -89,7 +89,7 @@ const RegisterPage = () => {
         </>
       ) : (
         <Register>
-          Your user has been registered! Proceed to
+          Your user has been registered! Proceed to{" "}
           <Link to="/login">Log In</Link>
         </Register>
       )}

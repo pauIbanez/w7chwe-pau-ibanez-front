@@ -27,14 +27,19 @@ const UserContextProvider = ({ children }) => {
   };
 
   const registerUser = async (formData, cb) => {
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+    };
+
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}users/register`, {
-        headers: { "Content-Type": "multipart/form-data" },
-        ...formData,
-      });
+      await axios.post(
+        `${process.env.REACT_APP_API_URL}users/register`,
+        formData,
+        config
+      );
       cb(true);
     } catch (error) {
-      cb(false);
+      cb(false, error.response.data.error);
     }
   };
 

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
@@ -69,15 +70,29 @@ const ByWho = styled.p`
 `;
 
 const RegisterPage = () => {
+  const [registered, setRegistered] = useState(false);
+
+  const onSucess = () => {
+    setRegistered(true);
+  };
   return (
     <PageHolder>
       <Title>Socialmedia</Title>
-      <Info>Sign up to convery enemies into friends.</Info>
-      <RegisterForm />
-      <OrSpan> OR </OrSpan>
-      <Register>
-        Already have an account? <Link to="/login">Log In</Link>
-      </Register>
+      {!registered ? (
+        <>
+          <Info>Sign up to convery enemies into friends.</Info>
+          <RegisterForm onSucess={onSucess} />
+          <OrSpan> OR </OrSpan>
+          <Register>
+            Already have an account? <Link to="/login">Log In</Link>
+          </Register>
+        </>
+      ) : (
+        <Register>
+          Your user has been registered! Proceed to{" "}
+          <Link to="/login">Log In</Link>
+        </Register>
+      )}
       <ByWho>By Pau</ByWho>
     </PageHolder>
   );

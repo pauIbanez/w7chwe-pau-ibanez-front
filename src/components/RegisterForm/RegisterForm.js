@@ -1,10 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import userContext from "../../contexts/userContext";
 import { Errors, Form } from "../../styles/formStyles";
 import StageOne from "./StageOne";
 import StageTwo from "./StageTwo";
 
-const RegisterForm = () => {
+const RegisterForm = ({ onSucess }) => {
   const blankFormData = {
     name: "",
     lastName: "",
@@ -18,6 +18,7 @@ const RegisterForm = () => {
   const [showErrors, setShowErrors] = useState(false);
   const [stage, setStage] = useState(0);
   const { registerUser } = useContext(userContext);
+  const errorMessage = useRef("");
 
   const updateData = (event) => {
     const newFormData = {
@@ -41,12 +42,21 @@ const RegisterForm = () => {
   ) {
     disabled = false;
   }
-  let errorMessage;
 
-  const onFail = (reason) => {
+  const onSent = (sucess, error) => {
     setLoading(false);
-    errorMessage = reason;
-    setShowErrors(true);
+    if (!sucess) {
+      errorMessage.current = error;
+      setShowErrors(true);
+      setFormData({
+        ...formData,
+        avatar: "",
+      });
+      goBack();
+      return;
+    }
+
+    onSucess();
   };
 
   const changeState = (event) => {
@@ -62,7 +72,14 @@ const RegisterForm = () => {
   const submit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    registerUser(formData, onFail);
+
+    const formDataToSend = new FormData();
+
+    Object.entries(formData).forEach((entry) => {
+      formDataToSend.append(entry[0], entry[1]);
+    });
+
+    registerUser(formDataToSend, onSent);
   };
 
   return (
@@ -84,7 +101,7 @@ const RegisterForm = () => {
           />
         )}
       </Form>
-      {showErrors && <Errors>{errorMessage}</Errors>}
+      {showErrors && <Errors>{errorMessage.current}</Errors>}
     </>
   );
 };

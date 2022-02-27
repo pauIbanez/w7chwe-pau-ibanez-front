@@ -4,14 +4,16 @@ export const handlers = [
   rest.get(`${process.env.REACT_APP_API_URL}profiles/list`, (req, res, ctx) => {
     return res(
       ctx.status(200),
-      ctx.json([
-        {
-          name: "person1",
-        },
-        {
-          name: "person2",
-        },
-      ])
+      ctx.json({
+        profiles: [
+          {
+            name: "person1",
+          },
+          {
+            name: "person2",
+          },
+        ],
+      })
     );
   }),
 
@@ -34,24 +36,12 @@ export const handlers = [
   }),
 
   rest.patch(
-    `${process.env.REACT_APP_API_URL}profiles/update/3`,
+    `${process.env.REACT_APP_API_URL}profiles/update`,
     (req, res, ctx) => {
       return res(
         ctx.status(200),
         ctx.json({
           name: "paquito",
-        })
-      );
-    }
-  ),
-
-  rest.patch(
-    `${process.env.REACT_APP_API_URL}profiles/update/4`,
-    (req, res, ctx) => {
-      return res(
-        ctx.status(400),
-        ctx.json({
-          error: "paquito",
         })
       );
     }

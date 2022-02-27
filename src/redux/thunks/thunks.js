@@ -15,7 +15,7 @@ export const loadProfilesThunk = async (dispatch) => {
         },
       }
     );
-    dispatch(loadProfilesAction(data));
+    dispatch(loadProfilesAction(data.profiles));
   } catch (error) {
     log(error);
   }
@@ -39,11 +39,11 @@ export const getLoadProfileThunk = (id) => async (dispatch) => {
   }
 };
 
-export const getUpdateProfileThunk = (id, profile) => async (dispatch) => {
+export const getUpdateProfileThunk = (profile) => async (dispatch) => {
   const token = localStorage.getItem("token");
   try {
     const { data } = await axios.patch(
-      `${process.env.REACT_APP_API_URL}profiles/update/${id}`,
+      `${process.env.REACT_APP_API_URL}profiles/update`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

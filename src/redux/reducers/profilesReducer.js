@@ -2,7 +2,6 @@ import actionTypes from "../actions/actionTypes";
 
 const profilesReducer = (currentProfiles = [], action = {}) => {
   let newProfiles;
-
   switch (action.type) {
     case actionTypes.loadProfiles:
       newProfiles = [...action.profiles];

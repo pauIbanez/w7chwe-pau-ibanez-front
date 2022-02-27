@@ -7,6 +7,7 @@ const UserContextProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const [authenticated, setAuthenticated] = useState(false);
+  const [user, setUser] = useState({});
 
   const loginUser = async (formData, cb) => {
     try {
@@ -17,6 +18,7 @@ const UserContextProvider = ({ children }) => {
         }
       );
       localStorage.setItem("token", data.token);
+      localStorage.setItem("id", data.id);
       setAuthenticated(true);
       navigate("/home");
     } catch (error) {
@@ -43,6 +45,33 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
+  const updateUser = async (update, cb) => {
+    const token = localStorage.getItem("token");
+    const id = localStorage.getItem("id");
+    try {
+      await axios.patch(
+        `${process.env.REACT_APP_API_URL}profiles/update`,
+        update,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API_URL}profiles/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setUser(data);
+    } catch (error) {
+      cb();
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -50,10 +79,37 @@ const UserContextProvider = ({ children }) => {
     }
   }, []);
 
+  useEffect(
+    () =>
+      (async () => {
+        if (authenticated) {
+          const id = localStorage.getItem("id");
+          const token = localStorage.getItem("token");
+          try {
+            const { data } = await axios.get(
+              `${process.env.REACT_APP_API_URL}profiles/${id}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+            setUser(data);
+          } catch (error) {
+            localStorage.removeItem("id");
+            localStorage.removeItem("token");
+            navigate("/login");
+          }
+        }
+      })(),
+    [authenticated, navigate]
+  );
   const contextValue = {
     authenticated,
     loginUser,
     registerUser,
+    user,
+    updateUser,
   };
 
   return (

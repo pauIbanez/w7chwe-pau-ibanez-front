@@ -53,7 +53,7 @@ const SubmitButton = styled.button`
 
 const LoginForm = () => {
   return (
-    <Form>
+    <Form data-testid="loginForm">
       <HiddenLabel htmlFor="username">Username</HiddenLabel>
       <InputField
         type="text"

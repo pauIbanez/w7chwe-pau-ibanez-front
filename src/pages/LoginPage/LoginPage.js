@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import LoginForm from "../../components/LoginForm/LoginForm";
 
@@ -23,6 +24,7 @@ const OrSpan = styled.span`
   align-items: center;
   color: #8e8e8e;
   font-weight: 600;
+  font-size: 15px;
 
   &:before {
     content: "";
@@ -41,12 +43,35 @@ const OrSpan = styled.span`
   }
 `;
 
+const Register = styled.p`
+  color: #8e8e8e;
+  font-size: 14px;
+
+  a {
+    text-decoration: none;
+    color: #f500f1;
+    font-weight: 600;
+  }
+`;
+
+const ByWho = styled.p`
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 15px;
+  color: #8e8e8e;
+  font-size: 12px;
+`;
+
 const LoginPage = () => {
   return (
     <PageHolder>
       <Title>Socialmedia</Title>
       <LoginForm />
       <OrSpan> OR </OrSpan>
+      <Register>
+        Don't have an account? <Link to="/register">Sign up</Link>
+      </Register>
+      <ByWho>By Pau</ByWho>
     </PageHolder>
   );
 };

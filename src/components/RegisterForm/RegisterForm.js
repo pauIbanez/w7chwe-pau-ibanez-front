@@ -10,6 +10,7 @@ const RegisterForm = () => {
     lastName: "",
     username: "",
     password: "",
+    avatar: "",
   };
 
   const [loading, setLoading] = useState(false);
@@ -21,18 +22,23 @@ const RegisterForm = () => {
   const updateData = (event) => {
     const newFormData = {
       ...formData,
-      [event.target.id]: event.target.value,
+      [event.target.id]:
+        event.target.id !== "avatar"
+          ? event.target.value
+          : event.target.files[0],
     };
 
     setFormData(newFormData);
   };
+
   let disabled = true;
   if (
-    formData.name &&
-    formData.lastName &&
-    formData.username &&
-    formData.password &&
-    !loading
+    (stage === 0 &&
+      formData.name &&
+      formData.lastName &&
+      formData.username &&
+      formData.password) ||
+    (stage === 1 && formData.avatar && !loading)
   ) {
     disabled = false;
   }

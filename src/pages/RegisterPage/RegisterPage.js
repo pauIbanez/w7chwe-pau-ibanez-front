@@ -4,7 +4,7 @@ import RegisterForm from "../../components/RegisterForm/RegisterForm";
 
 const PageHolder = styled.div`
   height: 100vh;
-  padding: 100px 50px;
+  padding: 50px 50px;
   display: flex;
   flex-direction: column;
   align-items: center;

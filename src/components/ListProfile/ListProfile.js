@@ -15,8 +15,8 @@ const Profile = styled.li`
 const Avatar = styled.img`
   border-radius: 50%;
   border: 3px solid #8e8e8e;
-  width: 75px;
-  height: 75px;
+  min-width: 75px;
+  min-height: 75px;
 `;
 // #f500f1
 const Names = styled.div`

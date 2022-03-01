@@ -67,7 +67,7 @@ const ListProfile = ({ profile, action, text }) => {
         src={`${process.env.REACT_APP_API_URL}avatars/${profile.avatar}`}
         alt="avatar"
         width="75"
-        heigfht="75"
+        height="75"
       />
       <Names>
         <Username>{firstLetterToCap(profile.username)}</Username>

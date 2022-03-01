@@ -15,6 +15,8 @@ const Profile = styled.li`
 const Avatar = styled.img`
   border-radius: 50%;
   border: 3px solid #8e8e8e;
+  width: 75px;
+  height: 75px;
 `;
 // #f500f1
 const Names = styled.div`
@@ -67,7 +69,7 @@ const ListProfile = ({ profile, action, text }) => {
         src={`${process.env.REACT_APP_API_URL}avatars/${profile.avatar}`}
         alt="avatar"
         width="75"
-        heigfht="75"
+        height="75"
       />
       <Names>
         <Username>{firstLetterToCap(profile.username)}</Username>
